@@ -1,6 +1,7 @@
 # pylint: disable=unused-variable
 
 import numpy as np
+from plot import plot
 
 ##########################################################
 # THE PERCEPTRON ALGORITHM
@@ -45,11 +46,11 @@ def evaluate(data_i, theta, theta_0):
 
 def iterate(data_i, theta, theta_0):
     if evaluate(data_i, theta, theta_0) <= 0:
-        # print("bad guess")
+        print("bad guess")
         # adjustment necessary (return actual values)
         return (data_i, theta, theta_0)
     else:
-        # print("good guess")
+        print("good guess")
         # no adjustment (everything is zero)
         return (np.zeros_like(data_i[0]), 0, 0)
 
@@ -61,25 +62,24 @@ def perceptron(data, theta=None, theta_0=0, t=1000):
     data, theta, theta_0 = format(data, theta, theta_0)
     # print("after formatting: data="+str(data)+', theta='+str(theta)+', theta_0='+str(theta_0))
 
+    index = 0
     # looping this makes classifier more accurate
-    for iteration in range(t):
-        for point in data:
-            # print("new data point: {}".format(point))
-            # print("{} is theta, {} is theta_0".format(theta, theta_0))
-            result = iterate(point, theta, theta_0)
+    # for iteration in range(t):
+    for point in data:
+        index += 1
 
-            # theta += y_i * x_i
-            # theta += result[0][1]*result[0][0] doesn't work because numpy doesn't like casting floats to ints
-            np.add(theta, result[0][1]*result[0][0], out=theta, casting='unsafe')
-            theta_0 += result[2]
-            # print("{} is new theta, {} is new theta_0".format(theta, theta_0))
+        print("new data point: {}".format(point))
+        print("{} is theta, {} is theta_0".format(theta, theta_0))
+        result = iterate(point, theta, theta_0)
+
+        # incomplete function
+        plot(point, theta_0, label=str(index))
+
+        # theta += y_i * x_i
+        # theta += result[0][1]*result[0][0] doesn't work because numpy doesn't like casting floats to ints
+        np.add(theta, result[0][1]*result[0][0], out=theta, casting='unsafe')
+        theta_0 += result[2]
+        print("{} is new theta, {} is new theta_0".format(theta, theta_0))
 
     return (theta, theta_0)
 
-data = [
-    [[1, -1], 1] ,
-    [[0, 1], -1] ,
-    [[-1.5, -1], 1]
-]
-
-print(perceptron(data))
