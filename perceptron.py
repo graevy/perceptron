@@ -72,7 +72,7 @@ def perceptron(data, theta=None, theta_0=0, t=1000):
         print("{} is theta, {} is theta_0".format(theta, theta_0))
         result = iterate(point, theta, theta_0)
 
-        # incomplete function
+        # TODO: incomplete function
         plot(point, theta_0, label=str(index))
 
         # theta += y_i * x_i
