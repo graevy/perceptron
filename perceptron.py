@@ -82,4 +82,3 @@ def perceptron(data, theta=None, theta_0=0, t=1000):
         print("{} is new theta, {} is new theta_0".format(theta, theta_0))
 
     return (theta, theta_0)
-
