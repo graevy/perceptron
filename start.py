@@ -10,6 +10,6 @@ data = [
     [[-1.5, -1], 1]
 ]
 
-plt.show()
-
 print("Results! Theta = {}, theta_0 = {}".format(*perceptron.perceptron(data)))
+
+plt.show()

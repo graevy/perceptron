@@ -72,13 +72,13 @@ def perceptron(data, theta=None, theta_0=0, t=1000):
         print("{} is theta, {} is theta_0".format(theta, theta_0))
         result = iterate(point, theta, theta_0)
 
-        # TODO: incomplete function
-        plot(point, theta_0, label=str(index))
-
         # theta += y_i * x_i
-        # theta += result[0][1]*result[0][0] doesn't work because numpy doesn't like casting floats to ints
+        # numpy doesn't like casting floats to ints, hence not "theta += result[0][1]*result[0][0]""
         np.add(theta, result[0][1]*result[0][0], out=theta, casting='unsafe')
         theta_0 += result[2]
         print("{} is new theta, {} is new theta_0".format(theta, theta_0))
+
+        plot(theta, theta_0, label=str(index))
+
 
     return (theta, theta_0)

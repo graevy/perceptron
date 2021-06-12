@@ -19,13 +19,15 @@ def plot(theta, theta_0=0, label=''):
     xmax = 5
 
     # formula for creating the line from both points:
-    # x*theta[0] + ytheta[1] = theta_0
-    # simplifies to y = (theta_0 - x*theta[0]) / theta[1]
+    # (remember that numpy arrays are lists of lists, hence double indexing)
+    # x*theta[0][0] + ytheta[0][1] = theta_0
+    # simplifies to y = (theta_0 - x*theta[0][0]) / theta[0][1]
 
     # make two points by substituting values for x
-    y1 = (theta_0 + xmin*theta[0])/theta[1]
-    y2 = (theta_0 + xmax*theta[0])/theta[1]
+    y1 = (theta_0 + xmin*theta[0][0])/theta[0][1]
+    y2 = (theta_0 + xmax*theta[0][0])/theta[0][1]
 
     # feed the points into pyplot
+    # right now this makes a new graph for each classifier iteration
     fig, ax = plt.subplots()
     ax.plot([xmin, xmax], [y1, y2], label=label)
