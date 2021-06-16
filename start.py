@@ -13,4 +13,5 @@ data = [
 print("Results! Theta = {}, theta_0 = {}".format(*perceptron.perceptron(data)))
 
 plt.legend()
+plt.title("Perceptron")
 plt.show()
