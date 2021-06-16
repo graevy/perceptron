@@ -1,11 +1,8 @@
-# pylint: disable=unused-variable
-
 import matplotlib.pyplot as plt
 import numpy as np
 
-# matplotlib.use('TkAgg')
 
-# this needs to actually do linear algebra on data points
+# this needs to actually do linear algebra on data points at some point
 def plot(theta, theta_0=0, label=''):
     """graphs a perceptron iteration in 2 dimensions
 
@@ -20,7 +17,7 @@ def plot(theta, theta_0=0, label=''):
 
     # formula for creating the line from both points:
     # (remember that numpy arrays are lists of lists, hence double indexing)
-    # x*theta[0][0] + ytheta[0][1] = theta_0
+    # x*theta[0][0] + y*theta[0][1] = theta_0
     # simplifies to y = (theta_0 - x*theta[0][0]) / theta[0][1]
 
     # make two points by substituting values for x
@@ -28,6 +25,4 @@ def plot(theta, theta_0=0, label=''):
     y2 = (theta_0 + xmax*theta[0][0])/theta[0][1]
 
     # feed the points into pyplot
-    # right now this makes a new graph for each classifier iteration
-    fig, ax = plt.subplots()
-    ax.plot([xmin, xmax], [y1, y2], label=label)
+    plt.plot([xmin, xmax], [y1, y2], label=label)
