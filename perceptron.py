@@ -32,8 +32,8 @@ def format(data, theta, theta_0):
 
     Args:
         data (a list or numpy array): the whole dataset
-        theta (a numpy array): hyperparameters for classification
-        theta_0 (float): parameter
+        theta (a numpy array): classifier hyperparameters
+        theta_0 (float): 0d classifier parameter
 
     Returns:
         tuple: the input, formatted for evaluation
