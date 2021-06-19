@@ -24,6 +24,7 @@ from plot import plot
 # 3. evaluate determines if the classifier guessed the data's label correctly
 # 4. evaluate returns relevant data to update classifier parameters with
 # 5. perceptron updates the classifier with theta += y_i*x_i and theta_0 += y_i.
+# (or it doesn't update at all on a correct guess)
 ##########################################################
 
 
@@ -40,8 +41,10 @@ def format(data, theta, theta_0):
     """
     # to output a scalar via np.dot(theta, x)
     # theta must be a 1 by d array
-    theta = np.array([theta])
-    if theta.shape[0] != 1:
+    if type(theta) == list:
+        theta = np.array([theta])
+
+    if theta.shape[1] != 1:
         print("theta shape error")
     
     if type(theta_0) is not int:
@@ -71,9 +74,10 @@ def evaluate(data_i, theta, theta_0):
     """
     # data_i[0] is x_i, the hyperpoint
     # data_i[1] is y_i, the label for that hyperpoint (-1 or 1)
-    guess = data_i[1]*np.sign(np.dot(theta, data_i[0]) + theta_0)
-
-    if guess <= 0:
+    y_i, x_i = data_i[1], data_i[0]
+    guess = y_i*(np.dot(theta.T, x_i) + theta_0)
+    print(f"evaluate dotted {theta.T} and {x_i.T}, added {theta_0}, and multiplied by {y_i} to guess {guess[0][0]}")
+    if guess[0][0] <= 0:
         return (data_i, theta, theta_0)
     else:
         return False
@@ -86,7 +90,7 @@ def perceptron(data, theta=None, theta_0=0, t=1):
         data (numpy array): an entire dataset formatted [array, label], where label is 
         theta (numpy array, optional): classifier hyperparameters. Defaults to None.
         theta_0 (float, optional): 0d classifer parameter. Defaults to 0.
-        t (int, optional): number of times to loop over data. Defaults to 1000.
+        t (int, optional): number of times to loop over data. Defaults to 1.
 
     Returns:
         tuple: a tuple containing the resulting classifier (hyper)parameters
@@ -99,29 +103,34 @@ def perceptron(data, theta=None, theta_0=0, t=1):
 
     index = 0
 
-    # looping this makes classifier more accurate
+    # looping this makes the classifier more accurate on some datasets
     for iteration in range(t):
         for point in data:
 
             index += 1
             print(f"Loop number {index}")
-            print(f"{theta} is theta, {theta_0} is theta_0")
-            print(f"new data point. y_i: {point[1]} x_i {point[0]}")
+            print(f"{theta.T} is theta.T, {theta_0} is theta_0")
+            print(f"new data point. y_i: {point[1]}, x_i.T {point[0].T}")
 
 
             result = evaluate(point, theta, theta_0)
 
+            # "if the classifier failed for this point:"
             if result != False:
+                print("bad guess\n")
                 # theta += y_i * x_i; the algorithm updating itself
                 # yixi is y_i * x_i
                 yixi = np.multiply(result[0][1], result[0][0])
-                # numpy doesn't like casting floats to ints, hence not "theta += result[0][1]*result[0][0]""
+                # numpy doesn't like casting floats to ints, hence not "theta += yixi""
                 np.add(theta, yixi, out=theta, casting='unsafe')
                 theta_0 += result[0][1]
 
-            # matplotlib.pyplot.plot unfortunately takes a 'label' kwarg to name each entry in a legend
-            # do not confuse it with the labels attached to supervised learning data
-            plot(theta, theta_0, label=str(index))
+                # matplotlib.pyplot.plot unfortunately takes a 'label' kwarg to name each entry in a legend
+                # do not confuse it with the labels attached to supervised learning datapoints
+                plot(theta, theta_0, label=str(index))
+
+            else:
+                print("good guess\n")
 
 
     return (theta, theta_0)
