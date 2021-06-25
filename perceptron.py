@@ -34,7 +34,7 @@ def format(data, theta, theta_0):
     Args:
         data (a list or numpy array): the whole dataset
         theta (a numpy array): classifier hyperparameters
-        theta_0 (float): 0d classifier parameter
+        theta_0 (int): 0d classifier parameter
 
     Returns:
         tuple: the input, formatted for evaluation
@@ -67,7 +67,7 @@ def evaluate(data_i, theta, theta_0):
     Args:
         data_i (numpy array): data hyperpoint
         theta (numpy array): classifier hyperparameters
-        theta_0 (float): 0d classifier parameter
+        theta_0 (int): 0d classifier parameter
 
     Returns:
         tuple or False: interpreted by perceptron
@@ -84,12 +84,12 @@ def evaluate(data_i, theta, theta_0):
 
 
 def perceptron(data, theta=None, theta_0=0, t=1):
-    """introductory supervised machine learning algorithm to generate a linear classifier in n-dimensional space
+    """introductory supervised machine learning algorithm to generate a linear classifier
 
     Args:
         data (numpy array): an entire dataset formatted [array, label], where label is 
         theta (numpy array, optional): classifier hyperparameters. Defaults to None.
-        theta_0 (float, optional): 0d classifer parameter. Defaults to 0.
+        theta_0 (int, optional): 0d classifer parameter. Defaults to 0.
         t (int, optional): number of times to loop over data. Defaults to 1.
 
     Returns:
