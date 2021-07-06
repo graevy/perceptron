@@ -69,7 +69,7 @@ def perceptron(data, theta=None, theta_0=0):
     """
 
     if theta == None:
-        theta, theta_0 = np.zeros_like(data[0][0]), 0
+        theta = np.zeros_like(data[0][0])
 
     classificationIndex = 0
     loopIndex = 0
